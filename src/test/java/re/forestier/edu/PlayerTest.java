@@ -145,67 +145,67 @@ public class PlayerTest {
     @Test
     public void testMajFinDeTour() {
         player testPlayer = new player("John", "Hero", "ADVENTURER", 50, new ArrayList<>());
-        testPlayer.currenthealthpoints = 0;
+        testPlayer.currentHealthPoints = 0;
         UpdatePlayer.majFinDeTour(testPlayer);
-        assertEquals(0, testPlayer.currenthealthpoints, "Player should have 0 health points.");
-        testPlayer.currenthealthpoints = 0;
+        assertEquals(0, testPlayer.currentHealthPoints, "Player should have 0 health points.");
+        testPlayer.currentHealthPoints = 0;
         UpdatePlayer.majFinDeTour(testPlayer);
-        assertTrue(testPlayer.currenthealthpoints == 0, "Player should be KO.");
+        assertTrue(testPlayer.currentHealthPoints == 0, "Player should be KO.");
     
         // Test case where health points are at full
-        testPlayer.currenthealthpoints = testPlayer.healthpoints;
+        testPlayer.currentHealthPoints = testPlayer.healthPoints;
         UpdatePlayer.majFinDeTour(testPlayer);
-        assertEquals(testPlayer.healthpoints, testPlayer.currenthealthpoints);
+        assertEquals(testPlayer.healthPoints, testPlayer.currentHealthPoints);
 
         // Test case where health points are below half
-        testPlayer.currenthealthpoints = testPlayer.healthpoints / 4;
+        testPlayer.currentHealthPoints = testPlayer.healthPoints / 4;
         UpdatePlayer.majFinDeTour(testPlayer);
         if (testPlayer.getAvatarClass().equals("DWARF") && testPlayer.inventory.contains("Holy Elixir")) {
-            assertEquals(testPlayer.healthpoints / 4 + 2, testPlayer.currenthealthpoints); // Healing for dwarf
+            assertEquals(testPlayer.healthPoints / 4 + 2, testPlayer.currentHealthPoints); // Healing for dwarf
         }
             testPlayer.inventory.add("Magic Bow");
-        testPlayer.currenthealthpoints = testPlayer.healthpoints / 4;
+        testPlayer.currentHealthPoints = testPlayer.healthPoints / 4;
         UpdatePlayer.majFinDeTour(testPlayer);
-        assertEquals(testPlayer.healthpoints / 4 + testPlayer.currenthealthpoints / 8, testPlayer.currenthealthpoints);
+        assertEquals(testPlayer.healthPoints / 4 + testPlayer.currentHealthPoints / 8, testPlayer.currentHealthPoints);
     
     }
 
     @Test
     public void testMajFinDeTourDwarfWithHolyElixir() {
         player testPlayer = new player("John", "Hero", "DWARF", 50, new ArrayList<>());
-        testPlayer.healthpoints = 20;
-        testPlayer.currenthealthpoints = 9;
+        testPlayer.healthPoints = 20;
+        testPlayer.currentHealthPoints = 9;
         testPlayer.inventory.add("Holy Elixir");
         UpdatePlayer.majFinDeTour(testPlayer);
-        assertEquals(11, testPlayer.currenthealthpoints, "Dwarf player should have 11 health points.");
+        assertEquals(11, testPlayer.currentHealthPoints, "Dwarf player should have 11 health points.");
     }
     @Test
     public void testMajFinDeTourDwarfWithAnotherItem() {
         player testPlayer = new player("John", "Hero", "DWARF", 50, new ArrayList<>());
-        testPlayer.healthpoints = 20;
-        testPlayer.currenthealthpoints = 9;
+        testPlayer.healthPoints = 20;
+        testPlayer.currentHealthPoints = 9;
         testPlayer.inventory.add("No Holy Elixir");
         UpdatePlayer.majFinDeTour(testPlayer);
-        assertEquals(10, testPlayer.currenthealthpoints, "Dwarf player should have 10 health points.");
+        assertEquals(10, testPlayer.currentHealthPoints, "Dwarf player should have 10 health points.");
     }
 
     @Test
     public void testMajFinDeTourAdventurer() {
         player testPlayer = new player("John", "Hero", "ADVENTURER", 50, new ArrayList<>());
-        testPlayer.healthpoints = 20;
-        testPlayer.currenthealthpoints = 9;
+        testPlayer.healthPoints = 20;
+        testPlayer.currentHealthPoints = 9;
         UpdatePlayer.majFinDeTour(testPlayer);
-        assertEquals(10, testPlayer.currenthealthpoints, "Adventurer player should have 10 health points.");
+        assertEquals(10, testPlayer.currentHealthPoints, "Adventurer player should have 10 health points.");
     }
 
     @Test
     public void testMajFinDeTourAdventurerWithHighXp() {
         player testPlayer = new player("John", "Hero", "ADVENTURER", 50, new ArrayList<>());
-        testPlayer.healthpoints = 20;
+        testPlayer.healthPoints = 20;
         UpdatePlayer.addXp(testPlayer, 990);
-        testPlayer.currenthealthpoints = 9;
+        testPlayer.currentHealthPoints = 9;
         UpdatePlayer.majFinDeTour(testPlayer);
-        assertEquals(11, testPlayer.currenthealthpoints, "Adventurer player should have 11 health points after leveling up.");
+        assertEquals(11, testPlayer.currentHealthPoints, "Adventurer player should have 11 health points after leveling up.");
     }
 @Test
     void testAffichageJoueurWithInventory() {
@@ -221,24 +221,24 @@ public class PlayerTest {
     @Test
     public void testMajFinDeTourArcherWithMagicBow() {
         player testPlayer = new player("John", "Hero", "ARCHER", 50, new ArrayList<>());
-        testPlayer.healthpoints = 20;
-        testPlayer.currenthealthpoints = 9;
+        testPlayer.healthPoints = 20;
+        testPlayer.currentHealthPoints = 9;
         testPlayer.inventory.add("Magic Bow");
         UpdatePlayer.majFinDeTour(testPlayer);
-        assertEquals(10, testPlayer.currenthealthpoints, "Archer player should have 10 health points.");
+        assertEquals(10, testPlayer.currentHealthPoints, "Archer player should have 10 health points.");
     } @Test
     public void testMajFinDeTourArcherWithNull() {
         player testPlayer = new player("John", "Hero", "ARCHER", 50, new ArrayList<>());
-        testPlayer.healthpoints = 20;
-        testPlayer.currenthealthpoints = 9;
+        testPlayer.healthPoints = 20;
+        testPlayer.currentHealthPoints = 9;
         testPlayer.inventory.add(null);
         UpdatePlayer.majFinDeTour(testPlayer);
-        assertEquals(10, testPlayer.currenthealthpoints, "Archer player should have 10 health points.");
+        assertEquals(10, testPlayer.currentHealthPoints, "Archer player should have 10 health points.");
     }
     @Test
     void testPlayerKO() {
         player testPlayer = new player("John", "Hero", "ARCHER", 50, new ArrayList<>());
-        testPlayer.currenthealthpoints = 0;
+        testPlayer.currentHealthPoints = 0;
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
@@ -253,29 +253,29 @@ public class PlayerTest {
     @Test
     public void testMajFinDeTourArcherWithoutBow() {
         player testPlayer = new player("John", "Hero", "ARCHER", 50, new ArrayList<>());
-        testPlayer.healthpoints = 20;
-        testPlayer.currenthealthpoints = 9;
+        testPlayer.healthPoints = 20;
+        testPlayer.currentHealthPoints = 9;
         testPlayer.inventory.add("No Bow");
         UpdatePlayer.majFinDeTour(testPlayer);
-        assertEquals(10, testPlayer.currenthealthpoints, "Archer player should have 10 health points.");
+        assertEquals(10, testPlayer.currentHealthPoints, "Archer player should have 10 health points.");
     }
 
     @Test
     public void testMajFinDeTourFullHealth() {
         player testPlayer = new player("John", "Hero", "ARCHER", 50, new ArrayList<>());
-        testPlayer.healthpoints = 20;
-        testPlayer.currenthealthpoints = 20;
+        testPlayer.healthPoints = 20;
+        testPlayer.currentHealthPoints = 20;
         UpdatePlayer.majFinDeTour(testPlayer);
-        assertEquals(20, testPlayer.currenthealthpoints, "Player should remain at full health points.");
+        assertEquals(20, testPlayer.currentHealthPoints, "Player should remain at full health points.");
     }
 
     @Test
     public void testMajFinDeTourFullHealthSur2() {
         player testPlayer = new player("John", "Hero", "ARCHER", 50, new ArrayList<>());
-        testPlayer.healthpoints = 20;
-        testPlayer.currenthealthpoints = 10;
+        testPlayer.healthPoints = 20;
+        testPlayer.currentHealthPoints = 10;
         UpdatePlayer.majFinDeTour(testPlayer);
-        assertEquals(10, testPlayer.currenthealthpoints, "Player should remain at full health points.");
+        assertEquals(10, testPlayer.currentHealthPoints, "Player should remain at full health points.");
     }
 
     @Test
@@ -299,16 +299,16 @@ public class PlayerTest {
     @Test
     void testMagicBowCondition() {
         player testPlayer = new player("John", "Hero", "ARCHER", 100, new ArrayList<>());
-        testPlayer.currenthealthpoints = 40; 
+        testPlayer.currentHealthPoints = 40; 
 
         testPlayer.inventory = new ArrayList<>();
         testPlayer.inventory.add("Magic Bow");
 
         UpdatePlayer.majFinDeTour(testPlayer);
 
-        int expectedHealthIncrease = 1+ testPlayer.currenthealthpoints + testPlayer.currenthealthpoints/8-1; 
+        int expectedHealthIncrease = 1+ testPlayer.currentHealthPoints + testPlayer.currentHealthPoints/8-1; 
 
-        assertEquals(expectedHealthIncrease, testPlayer.currenthealthpoints);
+        assertEquals(expectedHealthIncrease, testPlayer.currentHealthPoints);
     }
     @Test
     public void testAddMoneyZero() {

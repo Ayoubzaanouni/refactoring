@@ -5,29 +5,12 @@ import java.util.Random;
 
 public class UpdatePlayer {
 
-    private static final String[] OBJECT_LIST = {
-        "Lookout Ring : Prevents surprise attacks",
-        "Scroll of Stupidity : INT-2 when applied to an enemy",
-        "Draupnir : Increases XP gained by 100%",
-        "Magic Charm : Magic +10 for 5 rounds",
-        "Rune Staff of Curse : May burn your enemies... Or yourself. Who knows?",
-        "Combat Edge : Well, that's an edge",
-        "Holy Elixir : Recover your HP"
+    private final static String[] objectList = {"Lookout Ring : Prevents surprise attacks","Scroll of Stupidity : INT-2 when applied to an enemy", "Draupnir : Increases XP gained by 100%", "Magic Charm : Magic +10 for 5 rounds", "Rune Staff of Curse : May burn your ennemies... Or yourself. Who knows?", "Combat Edge : Well, that's an edge", "Holy Elixir : Recover your HP"
     };
 
-    
     public static HashMap<String, HashMap<Integer, HashMap<String, Integer>>> abilitiesPerTypeAndLevel() {
         HashMap<String, HashMap<Integer, HashMap<String, Integer>>> abilitiesPerTypeAndLevel = new HashMap<>();
 
-        abilitiesPerTypeAndLevel.put("ADVENTURER", createAdventurerAbilities());
-        abilitiesPerTypeAndLevel.put("ARCHER", createArcherAbilities());
-        abilitiesPerTypeAndLevel.put("DWARF", createDwarfAbilities());
-
-        return abilitiesPerTypeAndLevel;
-    }
-
-    // createAdventurerAbilities crée les capacités de l'avatar ADVENTURER
-    public static HashMap<Integer, HashMap<String, Integer>> createAdventurerAbilities() {
         HashMap<Integer, HashMap<String, Integer>> adventurerMap = new HashMap<>();
         HashMap<String, Integer> adventurerLevel1 = new HashMap<>();
         adventurerLevel1.put("INT", 1);
@@ -55,11 +38,9 @@ public class UpdatePlayer {
         adventurerLevel5.put("DEF", 4);
         adventurerMap.put(5, adventurerLevel5);
 
-        return adventurerMap;
-    }
+        abilitiesPerTypeAndLevel.put("ADVENTURER", adventurerMap);
 
-    // createArcherAbilities crée les capacités de l'avatar ARCHER
-    public static HashMap<Integer, HashMap<String, Integer>> createArcherAbilities() {
+
         HashMap<Integer, HashMap<String, Integer>> archerMap = new HashMap<>();
         HashMap<String, Integer> archerLevel1 = new HashMap<>();
         archerLevel1.put("INT", 1);
@@ -85,11 +66,9 @@ public class UpdatePlayer {
         archerLevel5.put("ATK", 4);
         archerMap.put(5, archerLevel5);
 
-        return archerMap;
-    }
+        abilitiesPerTypeAndLevel.put("ARCHER", archerMap);
 
-    // createDwarfAbilities crée les capacités de l'avatar DWARF
-    public static HashMap<Integer, HashMap<String, Integer>> createDwarfAbilities() {
+
         HashMap<Integer, HashMap<String, Integer>> dwarf = new HashMap<>();
         HashMap<String, Integer> dwarfLevel1 = new HashMap<>();
         dwarfLevel1.put("ALC", 4);
@@ -114,9 +93,10 @@ public class UpdatePlayer {
         dwarfLevel5.put("CHA", 1);
         dwarf.put(5, dwarfLevel5);
 
-        return dwarf;
-    }
+        abilitiesPerTypeAndLevel.put("DWARF", dwarf);
 
+        return abilitiesPerTypeAndLevel;
+    }
 
     public static boolean addXp(player player, int xp) {
         int currentLevel = player.retrieveLevel();
@@ -124,8 +104,11 @@ public class UpdatePlayer {
         int newLevel = player.retrieveLevel();
 
         if (newLevel != currentLevel) {
+            // Player leveled-up!
+            // Give a random object
+            ;
             Random random = new Random();
-            player.inventory.add(OBJECT_LIST[random.nextInt(OBJECT_LIST.length )]);
+            player.inventory.add(objectList[random.nextInt(objectList.length - 0) + 0]);
 
             // Add/upgrade abilities to player
             HashMap<String, Integer> abilities = abilitiesPerTypeAndLevel().get(player.getAvatarClass()).get(newLevel);
@@ -139,55 +122,45 @@ public class UpdatePlayer {
 
     // majFinDeTour met à jour les points de vie
     public static void majFinDeTour(player player) {
-        if(player.currentHealthPoints == 0) {
+        if(player.currenthealthpoints == 0) {
             System.out.println("Le joueur est KO !");
             return;
         }
 
-        if(player.currentHealthPoints < player.healthPoints/2) {
+        if(player.currenthealthpoints < player.healthpoints/2) {
             if(!player.getAvatarClass().equals("ADVENTURER")) {
                 if(player.getAvatarClass().equals("DWARF")) {
                     if(player.inventory.contains("Holy Elixir")) {
-                        player.currentHealthPoints+=1;
+                        player.currenthealthpoints+=1;
                     }
-                    player.currentHealthPoints+=1;
+                    player.currenthealthpoints+=1;
                 } else if(player.getAvatarClass().equals("ADVENTURER")) {
-                    player.currentHealthPoints+=2;
+                    player.currenthealthpoints+=2;
                 }
 
 
                 if(player.getAvatarClass().equals("ARCHER")) {
-                    player.currentHealthPoints+=1;
+                    player.currenthealthpoints+=1;
                     if(player.inventory.contains("Magic Bow")) {
-                        player.currentHealthPoints+=player.currentHealthPoints/8-1;
+                        player.currenthealthpoints+=player.currenthealthpoints/8-1;
                     }
                 }
             } else {
-                player.currentHealthPoints+=2;
+                player.currenthealthpoints+=2;
                 if(player.retrieveLevel() < 3) {
-                    player.currentHealthPoints-=1;
+                    player.currenthealthpoints-=1;
                 }
             }
-        } else if(player.currentHealthPoints >= player.healthPoints/2){
-            if(player.currentHealthPoints >= player.healthPoints) {
-                player.currentHealthPoints = player.healthPoints;
+        } else if(player.currenthealthpoints >= player.healthpoints/2){
+            if(player.currenthealthpoints >= player.healthpoints) {
+                player.currenthealthpoints = player.healthpoints;
                 return;
             }
         }
 
 
-        if(player.currentHealthPoints >= player.healthPoints) {
-            player.currentHealthPoints = player.healthPoints;
+        if(player.currenthealthpoints >= player.healthpoints) {
+            player.currenthealthpoints = player.healthpoints;
         }
     }
-
-    private static HashMap<String, Integer> createAbilityMap(int atk, int def, int intg, int cha) {
-        HashMap<String, Integer> abilities = new HashMap<>();
-        abilities.put("ATK", atk);
-        abilities.put("DEF", def);
-        abilities.put("INT", intg);
-        abilities.put("CHA", cha);
-        return abilities;
-    }
-    
 }

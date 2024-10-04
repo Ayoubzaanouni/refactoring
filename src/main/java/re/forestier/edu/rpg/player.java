@@ -4,84 +4,102 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class player {
+    // Public Fields
     public String playerName;
-    public String Avatar_name;
-    private String AvatarClass;
-
+    public String avatarName;
     public Integer money;
-    private Float __real_money__;
-
-
     public int level;
-    public int healthpoints;
-    public int currenthealthpoints;
+    public int healthPoints;
+    public int currentHealthPoints;
+    public static final String[] classes = {"ARCHER", "ADVENTURER", "DWARF"};
+    
+    // Protected Fields
     protected int xp;
 
+    // Private Fields
+    private String avatarClass;
 
+    // Data Structures
     public HashMap<String, Integer> abilities;
+    
     public ArrayList<String> inventory;
-    public player(String playerName, String avatar_name, String avatarClass, int money, ArrayList<String> inventory) {
-        if (!avatarClass.equals("ARCHER") && !avatarClass.equals("ADVENTURER") && !avatarClass.equals("DWARF") ) {
+
+    // Constructor
+    public player(String playerName, String avatarName, String avatarClass, int money, ArrayList<String> inventory) {
+        
+        boolean isValidClass = false;
+        for (String validClass : classes) {
+            if (validClass.equals(avatarClass)) {
+                isValidClass = true;
+                break;
+            }
+        }
+        if (!isValidClass) {
             return;
         }
 
         this.playerName = playerName;
-        Avatar_name = avatar_name;
-        AvatarClass = avatarClass;
-        this.money = Integer.valueOf(money);
+        this.avatarName = avatarName;
+        this.avatarClass = avatarClass;
+        this.money = money;
         this.inventory = inventory;
-        this.abilities = UpdatePlayer.abilitiesPerTypeAndLevel().get(AvatarClass).get(1);
+        this.abilities = UpdatePlayer.abilitiesPerTypeAndLevel().get(avatarClass).get(1);
     }
 
-    public String getAvatarClass () {
-        return AvatarClass;
+    // Getter for AvatarClass
+    public String getAvatarClass() {
+        return avatarClass;
     }
 
+    // Methods for managing money
     public void removeMoney(int amount) throws IllegalArgumentException {
         if (money - amount < 0) {
-            throw new IllegalArgumentException("Player can't have a negative money!");
+            throw new IllegalArgumentException("Player can't have negative money!");
         }
+        money -= amount;
+    }
 
-        money = Integer.parseInt(money.toString()) - amount;
-    }
     public void addMoney(int amount) {
-        var value = Integer.valueOf(amount);
-        money = money + (value != null ? value : 0);
+        if (amount != 0) {
+            money += amount;
+        }
     }
+
+    // Method for retrieving player level based on XP
     public int retrieveLevel() {
-        // (lvl-1) * 10 + round((lvl * xplvl-1)/4)
         HashMap<Integer, Integer> levels = new HashMap<>();
-        levels.put(2,10); // 1*10 + ((2*0)/4)
-        levels.put(3,27); // 2*10 + ((3*10)/4)
-        levels.put(4,57); // 3*10 + ((4*27)/4)
-        levels.put(5,111); // 4*10 + ((5*57)/4)
-        //TODO : ajouter les prochains niveaux
+        levels.put(2, 10);
+        levels.put(3, 27);
+        levels.put(4, 57);
+        levels.put(5, 111);
+
+        
+        // TODO: Add more levels if needed
 
         if (xp < levels.get(2)) {
             return 1;
-        }
-        else if (xp < levels.get(3)) {return 2;
-        }
-        if (xp < levels.get(4)) {
+        } else if (xp < levels.get(3)) {
+            return 2;
+        } else if (xp < levels.get(4)) {
             return 3;
+        } else if (xp < levels.get(5)) {
+            return 4;
+        } else {
+            return 5;
         }
-        if (xp < levels.get(5)) return 4;
-        return 5;
     }
 
+    // Getter for XP
     public int getXp() {
         return this.xp;
     }
 
     /*
-    Ингредиенты:
-        Для теста:
-
-            250 г муки
-            125 г сливочного масла (холодное)
-            70 г сахара
-            1 яйцо
-            1 щепотка соли
-     */
-
+    Ingredients for the recipe:
+        - 250 g flour
+        - 125 g cold butter
+        - 70 g sugar
+        - 1 egg
+        - A pinch of salt
+    */
 }
