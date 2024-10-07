@@ -1,19 +1,11 @@
 package re.forestier.edu.rpg;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 public class UpdatePlayer {
 
-    private static final String[] OBJECT_LIST = {
-        "Lookout Ring : Prevents surprise attacks",
-        "Scroll of Stupidity : INT-2 when applied to an enemy",
-        "Draupnir : Increases XP gained by 100%",
-        "Magic Charm : Magic +10 for 5 rounds",
-        "Rune Staff of Curse : May burn your enemies... Or yourself. Who knows?",
-        "Combat Edge : Well, that's an edge",
-        "Holy Elixir : Recover your HP"
-    };
 
     
     public static HashMap<String, HashMap<Integer, HashMap<String, Integer>>> abilitiesPerTypeAndLevel() {
@@ -118,22 +110,24 @@ public class UpdatePlayer {
 
 
     public static boolean addXp(player player, int xp) {
-        int currentLevel = Level.getLevel(xp);
-        player.xp += xp;
-        int newLevel = player.retrieveLevel();
+    int currentLevel = Level.getLevel(xp);
+    player.xp += xp;
+    int newLevel = player.retrieveLevel();
 
-        if (newLevel != currentLevel) {
-            Random random = new Random();
-            player.inventory.addItem(OBJECT_LIST[random.nextInt(OBJECT_LIST.length )]);
+    if (newLevel != currentLevel) {
+        Random random = new Random();
+        List<Item> items = ItemList.getItems();
+        Item randomItem = items.get(random.nextInt(items.size()));
+        player.inventory.addItem(randomItem.toString()); // Use the toString method for adding items
 
-            HashMap<String, Integer> abilities = abilitiesPerTypeAndLevel().get(player.getAvatarClass()).get(newLevel);
-            abilities.forEach((ability, level) -> {
-                player.abilities.put(ability, abilities.get(ability));
-            });
-            return true;
-        }
-        return false;
+        HashMap<String, Integer> abilities = abilitiesPerTypeAndLevel().get(player.getAvatarClass()).get(newLevel);
+        abilities.forEach((ability, level) -> {
+            player.abilities.put(ability, abilities.get(ability));
+        });
+        return true;
     }
+    return false;
+}
 
     // majFinDeTour met à jour les points de vie
     public static void majFinDeTour(player player) {
