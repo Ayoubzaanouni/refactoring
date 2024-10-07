@@ -26,7 +26,6 @@ public class UpdatePlayer {
         return abilitiesPerTypeAndLevel;
     }
 
-    // createAdventurerAbilities crée les capacités de l'avatar ADVENTURER
     public static HashMap<Integer, HashMap<String, Integer>> createAdventurerAbilities() {
         HashMap<Integer, HashMap<String, Integer>> adventurerMap = new HashMap<>();
         HashMap<String, Integer> adventurerLevel1 = new HashMap<>();
@@ -119,7 +118,7 @@ public class UpdatePlayer {
 
 
     public static boolean addXp(player player, int xp) {
-        int currentLevel = player.retrieveLevel();
+        int currentLevel = Level.getLevel(xp);
         player.xp += xp;
         int newLevel = player.retrieveLevel();
 
@@ -127,7 +126,6 @@ public class UpdatePlayer {
             Random random = new Random();
             player.inventory.add(OBJECT_LIST[random.nextInt(OBJECT_LIST.length )]);
 
-            // Add/upgrade abilities to player
             HashMap<String, Integer> abilities = abilitiesPerTypeAndLevel().get(player.getAvatarClass()).get(newLevel);
             abilities.forEach((ability, level) -> {
                 player.abilities.put(ability, abilities.get(ability));
@@ -179,15 +177,6 @@ public class UpdatePlayer {
         if(player.currentHealthPoints >= player.healthPoints) {
             player.currentHealthPoints = player.healthPoints;
         }
-    }
-
-    private static HashMap<String, Integer> createAbilityMap(int atk, int def, int intg, int cha) {
-        HashMap<String, Integer> abilities = new HashMap<>();
-        abilities.put("ATK", atk);
-        abilities.put("DEF", def);
-        abilities.put("INT", intg);
-        abilities.put("CHA", cha);
-        return abilities;
     }
     
 }

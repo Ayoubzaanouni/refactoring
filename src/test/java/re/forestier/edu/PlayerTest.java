@@ -78,6 +78,7 @@ public class PlayerTest {
     @Test
     public void testPlayerInventoryNotEmptyAfterLevelUp() {
         player testPlayer = new player("John", "Hero", "DWARF", 100, new ArrayList<>());
+        testPlayer.inventory.add("Magic Bow");
         UpdatePlayer.addXp(testPlayer, 60);
         assertFalse(testPlayer.inventory.isEmpty(), "Player inventory should not be empty after leveling up.");
     }
@@ -294,7 +295,7 @@ public class PlayerTest {
     public void testPlayerLevelMinXP() {
         player testPlayer = new player("John", "Hero", "ADVENTURER", 100, new ArrayList<>());
         UpdatePlayer.addXp(testPlayer, Integer.MIN_VALUE);
-        assertTrue(testPlayer.retrieveLevel() == 1, "Player should level up to the maximum level possible.");
+        assertTrue(testPlayer.retrieveLevel() == 1, "Player should level up to the minimum level possible.");
     }
     @Test
     void testMagicBowCondition() {

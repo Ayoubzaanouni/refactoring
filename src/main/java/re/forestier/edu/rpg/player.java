@@ -46,12 +46,10 @@ public class player {
         this.abilities = UpdatePlayer.abilitiesPerTypeAndLevel().get(avatarClass).get(1);
     }
 
-    // Getter for AvatarClass
     public String getAvatarClass() {
         return avatarClass;
     }
 
-    // Methods for managing money
     public void removeMoney(int amount) throws IllegalArgumentException {
         if (money - amount < 0) {
             throw new IllegalArgumentException("Player can't have negative money!");
@@ -67,29 +65,10 @@ public class player {
 
     // Method for retrieving player level based on XP
     public int retrieveLevel() {
-        HashMap<Integer, Integer> levels = new HashMap<>();
-        levels.put(2, 10);
-        levels.put(3, 27);
-        levels.put(4, 57);
-        levels.put(5, 111);
-
-        
-        // TODO: Add more levels if needed
-
-        if (xp < levels.get(2)) {
-            return 1;
-        } else if (xp < levels.get(3)) {
-            return 2;
-        } else if (xp < levels.get(4)) {
-            return 3;
-        } else if (xp < levels.get(5)) {
-            return 4;
-        } else {
-            return 5;
-        }
+        level = Level.getLevel(this.xp);
+        return level;
     }
 
-    // Getter for XP
     public int getXp() {
         return this.xp;
     }
