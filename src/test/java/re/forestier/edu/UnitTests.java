@@ -1,6 +1,8 @@
 package re.forestier.edu;
 
 import org.junit.jupiter.api.*;
+
+import re.forestier.edu.rpg.Inventory;
 import re.forestier.edu.rpg.player;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -13,14 +15,14 @@ public class UnitTests {
     @Test
     @DisplayName("Sample test")
     void testPlayerName() {
-        player player = new player("Florian", "Grognak le barbare", "ADVENTURER", 100, new ArrayList<>());
+        player player = new player("Florian", "Grognak le barbare", "ADVENTURER", 100, new Inventory());
         assertThat(player.playerName, is("Florian"));
     }
 
     @Test
     @DisplayName("Impossible to have negative money")
     void testNegativeMoney() {
-        player p = new player("Florian", "Grognak le barbare", "ADVENTURER", 100, new ArrayList<>());
+        player p = new player("Florian", "Grognak le barbare", "ADVENTURER", 100, new Inventory());
 
         try {
             p.removeMoney(200);

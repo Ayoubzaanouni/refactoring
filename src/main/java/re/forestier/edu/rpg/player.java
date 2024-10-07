@@ -1,6 +1,5 @@
 package re.forestier.edu.rpg;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class player {
@@ -11,21 +10,18 @@ public class player {
     public int level;
     public int healthPoints;
     public int currentHealthPoints;
-    public static final String[] classes = {"ARCHER", "ADVENTURER", "DWARF"};
+
+    public static final String[] classes = GameClasses.CLASSES;
     
-    // Protected Fields
     protected int xp;
 
-    // Private Fields
     private String avatarClass;
 
-    // Data Structures
     public HashMap<String, Integer> abilities;
     
-    public ArrayList<String> inventory;
+    public Inventory inventory;
 
-    // Constructor
-    public player(String playerName, String avatarName, String avatarClass, int money, ArrayList<String> inventory) {
+    public player(String playerName, String avatarName, String avatarClass, int money, Inventory inventory) {
         
         boolean isValidClass = false;
         for (String validClass : classes) {
@@ -37,12 +33,12 @@ public class player {
         if (!isValidClass) {
             return;
         }
-
         this.playerName = playerName;
         this.avatarName = avatarName;
         this.avatarClass = avatarClass;
         this.money = money;
         this.inventory = inventory;
+
         this.abilities = UpdatePlayer.abilitiesPerTypeAndLevel().get(avatarClass).get(1);
     }
 
