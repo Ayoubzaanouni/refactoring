@@ -4,173 +4,118 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import re.forestier.edu.rpg.Inventory.Item;
+import re.forestier.edu.rpg.Inventory.ItemList;
+import re.forestier.edu.rpg.PlayerTypes.Abilities;
+import re.forestier.edu.rpg.PlayerTypes.GameClasses;
+import re.forestier.edu.rpg.PlayerTypes.Player;
+
 public class UpdatePlayer {
 
-
     
-    public static HashMap<String, HashMap<Integer, HashMap<String, Integer>>> abilitiesPerTypeAndLevel() {
-        HashMap<String, HashMap<Integer, HashMap<String, Integer>>> abilitiesPerTypeAndLevel = new HashMap<>();
 
-        abilitiesPerTypeAndLevel.put("ADVENTURER", createAdventurerAbilities());
-        abilitiesPerTypeAndLevel.put("ARCHER", createArcherAbilities());
-        abilitiesPerTypeAndLevel.put("DWARF", createDwarfAbilities());
-
-        return abilitiesPerTypeAndLevel;
+    // Map to store abilities for each player class
+    public static HashMap<String, HashMap<Integer, Abilities>> abilitiesPerTypeAndLevel() {
+        HashMap<String, HashMap<Integer, Abilities>> abilitiesPerClass = new HashMap<>();
+        abilitiesPerClass.put(GameClasses.ADVENTURER, GameClasses.createAdventurerAbilities());
+        abilitiesPerClass.put(GameClasses.ARCHER, GameClasses.createArcherAbilities());
+        abilitiesPerClass.put(GameClasses.DWARF, GameClasses.createDwarfAbilities());
+        return abilitiesPerClass;
     }
 
-    public static HashMap<Integer, HashMap<String, Integer>> createAdventurerAbilities() {
-        HashMap<Integer, HashMap<String, Integer>> adventurerMap = new HashMap<>();
-        HashMap<String, Integer> adventurerLevel1 = new HashMap<>();
-        adventurerLevel1.put("INT", 1);
-        adventurerLevel1.put("DEF", 1);
-        adventurerLevel1.put("ATK", 3);
-        adventurerLevel1.put("CHA", 2);
-        adventurerMap.put(1, adventurerLevel1);
-
-        HashMap<String, Integer> adventurerLevel2 = new HashMap<>();
-        adventurerLevel1.put("INT", 2);
-        adventurerLevel1.put("CHA", 3);
-        adventurerMap.put(2, adventurerLevel2);
-
-        HashMap<String, Integer> adventurerLevel3 = new HashMap<>();
-        adventurerLevel3.put("ATK", 5);
-        adventurerLevel3.put("ALC", 1);
-        adventurerMap.put(3, adventurerLevel3);
-
-        HashMap<String, Integer> adventurerLevel4 = new HashMap<>();
-        adventurerLevel4.put("DEF", 3);
-        adventurerMap.put(4, adventurerLevel4);
-
-        HashMap<String, Integer> adventurerLevel5 = new HashMap<>();
-        adventurerLevel5.put("VIS", 1);
-        adventurerLevel5.put("DEF", 4);
-        adventurerMap.put(5, adventurerLevel5);
-
-        return adventurerMap;
+    //get the abilities of the player based on the class and level
+    public static Abilities getAbilities(Player player, int level) {
+        String avatarClass = player.getAvatarClass();
+        if (!GameClasses.isValidClass(avatarClass)) {
+            return null;
+        }
+        return abilitiesPerTypeAndLevel().get(avatarClass).get(level);
     }
 
-    // createArcherAbilities crée les capacités de l'avatar ARCHER
-    public static HashMap<Integer, HashMap<String, Integer>> createArcherAbilities() {
-        HashMap<Integer, HashMap<String, Integer>> archerMap = new HashMap<>();
-        HashMap<String, Integer> archerLevel1 = new HashMap<>();
-        archerLevel1.put("INT", 1);
-        archerLevel1.put("ATK", 3);
-        archerLevel1.put("CHA", 1);
-        archerLevel1.put("VIS", 3);
-        archerMap.put(1, archerLevel1);
+    // Add experience points to the player
+    public static boolean addXp(Player player, int xp) {
 
-        HashMap<String, Integer> archerLevel2 = new HashMap<>();
-        archerLevel2.put("DEF", 1);
-        archerLevel2.put("CHA", 2);
-        archerMap.put(2, archerLevel2);
+        int currentLevel = Level.getLevel(player.getXp());//+xp
+        int newXp = player.getXp() + xp;
+        player.setXp(newXp);
+        int newLevel = player.retrieveLevel();
 
-        HashMap<String, Integer> archerLevel3 = new HashMap<>();
-        archerLevel3.put("ATK", 3);
-        archerMap.put(3, archerLevel3);
-
-        HashMap<String, Integer> archerLevel4 = new HashMap<>();
-        archerLevel4.put("DEF", 2);
-        archerMap.put(4, archerLevel4);
-
-        HashMap<String, Integer> archerLevel5 = new HashMap<>();
-        archerLevel5.put("ATK", 4);
-        archerMap.put(5, archerLevel5);
-
-        return archerMap;
+        if (newLevel > currentLevel) {
+            grantRandomItem(player);
+            updatePlayerAbilities(player, newLevel);
+            return true;
+        }
+        return false;
     }
 
-    // createDwarfAbilities crée les capacités de l'avatar DWARF
-    public static HashMap<Integer, HashMap<String, Integer>> createDwarfAbilities() {
-        HashMap<Integer, HashMap<String, Integer>> dwarf = new HashMap<>();
-        HashMap<String, Integer> dwarfLevel1 = new HashMap<>();
-        dwarfLevel1.put("ALC", 4);
-        dwarfLevel1.put("INT", 1);
-        dwarfLevel1.put("ATK", 3);
-        dwarf.put(1, dwarfLevel1);
-
-        HashMap<String, Integer> dwarfLevel2 = new HashMap<>();
-        dwarfLevel2.put("DEF", 1);
-        dwarfLevel2.put("ALC", 5);
-        dwarf.put(2, dwarfLevel2);
-
-        HashMap<String, Integer> dwarfLevel3 = new HashMap<>();
-        dwarfLevel3.put("ATK", 4);
-        dwarf.put(3, dwarfLevel3);
-
-        HashMap<String, Integer> dwarfLevel4 = new HashMap<>();
-        dwarfLevel4.put("DEF", 2);
-        dwarf.put(4, dwarfLevel4);
-
-        HashMap<String, Integer> dwarfLevel5 = new HashMap<>();
-        dwarfLevel5.put("CHA", 1);
-        dwarf.put(5, dwarfLevel5);
-
-        return dwarf;
-    }
-
-
-    public static boolean addXp(player player, int xp) {
-    int currentLevel = Level.getLevel(xp);
-    player.xp += xp;
-    int newLevel = player.retrieveLevel();
-
-    if (newLevel != currentLevel) {
+    // Grant a random item to the player's inventory
+    private static void grantRandomItem(Player player) {
         Random random = new Random();
         List<Item> items = ItemList.getItems();
         Item randomItem = items.get(random.nextInt(items.size()));
-        player.inventory.addItem(randomItem.toString()); // Use the toString method for adding items
-
-        HashMap<String, Integer> abilities = abilitiesPerTypeAndLevel().get(player.getAvatarClass()).get(newLevel);
-        abilities.forEach((ability, level) -> {
-            player.abilities.put(ability, abilities.get(ability));
-        });
-        return true;
+        player.inventory.addItem(randomItem.toString());
     }
-    return false;
-}
 
-    // majFinDeTour met à jour les points de vie
-    public static void majFinDeTour(player player) {
-        if(player.currentHealthPoints == 0) {
+    // Update the player's abilities based on their class and level
+    private static void updatePlayerAbilities(Player player, int newLevel) {
+        Abilities abilities = getAbilities(player, newLevel);
+        player.setAbilities(abilities);
+    }
+
+    // Update player status at the end of the turn
+    public static void majFinDeTour(Player player) {
+        if (player.currentHealthPoints <= 0) {
             System.out.println("Le joueur est KO !");
             return;
         }
 
-        if(player.currentHealthPoints < player.healthPoints/2) {
-            if(!player.getAvatarClass().equals("ADVENTURER")) {
-                if(player.getAvatarClass().equals("DWARF")) {
-                    if(player.inventory.contains("Holy Elixir")) {
-                        player.currentHealthPoints+=1;
-                    }
-                    player.currentHealthPoints+=1;
-                } else if(player.getAvatarClass().equals("ADVENTURER")) {
-                    player.currentHealthPoints+=2;
-                }
-
-
-                if(player.getAvatarClass().equals("ARCHER")) {
-                    player.currentHealthPoints+=1;
-                    if(player.inventory.contains("Magic Bow")) {
-                        player.currentHealthPoints+=player.currentHealthPoints/8-1;
-                    }
-                }
-            } else {
-                player.currentHealthPoints+=2;
-                if(player.retrieveLevel() < 3) {
-                    player.currentHealthPoints-=1;
-                }
-            }
-        } else if(player.currentHealthPoints >= player.healthPoints/2){
-            if(player.currentHealthPoints >= player.healthPoints) {
-                player.currentHealthPoints = player.healthPoints;
-                return;
-            }
+        boolean isLowHealth = player.currentHealthPoints < player.healthPoints / 2;
+        switch (player.getAvatarClass()) {
+            case "DWARF":
+                handleDwarfHealth(player, isLowHealth);
+                break;
+            case "ADVENTURER":
+                handleAdventurerHealth(player, isLowHealth);
+                break;
+            case "ARCHER":
+                handleArcherHealth(player, isLowHealth);
+                break;
         }
 
-
-        if(player.currentHealthPoints >= player.healthPoints) {
+        // Restore health if above max
+        if (player.currentHealthPoints > player.healthPoints) {
             player.currentHealthPoints = player.healthPoints;
         }
     }
-    
+
+    // Handle health management for DWARF class
+    private static void handleDwarfHealth(Player player, boolean isLowHealth) {
+        if (isLowHealth) {
+            player.currentHealthPoints += 1; // Dwarfs regain 2 health if low
+            if (player.inventory.contains("Holy Elixir")) {
+                player.currentHealthPoints += 1; // Extra health from Holy Elixir
+            }
+        }
+    }
+
+    // Handle health management for ADVENTURER class
+    private static void handleAdventurerHealth(Player player, boolean isLowHealth) {
+        if (isLowHealth) {
+            player.currentHealthPoints += 2; // Adventurers regain 2 health if low
+            if (player.retrieveLevel() < 3) {
+                player.currentHealthPoints -= 1; // Penalty for lower levels
+            }
+        }
+    }
+
+    // Handle health management for ARCHER class
+    private static void handleArcherHealth(Player player, boolean isLowHealth) {
+        if (isLowHealth) {
+            player.currentHealthPoints += 1; // Archers regain 1 health if low
+            if (player.inventory.contains("Magic Bow")) {
+                player.currentHealthPoints += (player.currentHealthPoints / 8) - 1; // Extra health if they have a Magic
+                                                                                    // Bow
+            }
+        }
+    }
 }

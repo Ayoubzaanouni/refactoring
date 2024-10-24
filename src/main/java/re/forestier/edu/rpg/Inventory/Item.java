@@ -1,4 +1,4 @@
-package re.forestier.edu.rpg;
+package re.forestier.edu.rpg.Inventory;
 
 public class Item {
     private String name;

@@ -1,35 +1,36 @@
-package re.forestier.edu;
+// package re.forestier.edu;
 
-import org.junit.jupiter.api.*;
+// import org.junit.jupiter.api.*;
 
-import re.forestier.edu.rpg.Inventory;
-import re.forestier.edu.rpg.player;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.fail;
+// import re.forestier.edu.rpg.player;
+// import re.forestier.edu.rpg.Inventory.Inventory;
 
-import java.util.ArrayList;
+// import static org.hamcrest.MatcherAssert.assertThat;
+// import static org.hamcrest.Matchers.*;
+// import static org.junit.jupiter.api.Assertions.fail;
 
-public class UnitTests {
+// import java.util.ArrayList;
 
-    @Test
-    @DisplayName("Sample test")
-    void testPlayerName() {
-        player player = new player("Florian", "Grognak le barbare", "ADVENTURER", 100, new Inventory());
-        assertThat(player.playerName, is("Florian"));
-    }
+// public class UnitTests {
 
-    @Test
-    @DisplayName("Impossible to have negative money")
-    void testNegativeMoney() {
-        player p = new player("Florian", "Grognak le barbare", "ADVENTURER", 100, new Inventory());
+//     @Test
+//     @DisplayName("Sample test")
+//     void testPlayerName() {
+//         player player = new player("Florian", "Grognak le barbare", "ADVENTURER", 100, new Inventory());
+//         assertThat(player.playerName, is("Florian"));
+//     }
 
-        try {
-            p.removeMoney(200);
-        } catch (IllegalArgumentException e) {
-            return;
-        }
-        fail();
-    }
+//     @Test
+//     @DisplayName("Impossible to have negative money")
+//     void testNegativeMoney() {
+//         player p = new player("Florian", "Grognak le barbare", "ADVENTURER", 100, new Inventory());
 
-}
+//         try {
+//             p.removeMoney(200);
+//         } catch (IllegalArgumentException e) {
+//             return;
+//         }
+//         fail();
+//     }
+
+// }

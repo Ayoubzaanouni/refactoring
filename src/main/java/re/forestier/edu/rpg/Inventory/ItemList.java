@@ -1,4 +1,4 @@
-package re.forestier.edu.rpg;
+package re.forestier.edu.rpg.Inventory;
 
 import java.util.ArrayList;
 import java.util.List;

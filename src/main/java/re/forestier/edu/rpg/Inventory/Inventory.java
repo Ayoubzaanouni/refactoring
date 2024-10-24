@@ -1,4 +1,4 @@
-package re.forestier.edu.rpg;
+package re.forestier.edu.rpg.Inventory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,5 +34,16 @@ public class Inventory {
 
     public void display() {
         System.out.println("Inventory: " + items);
+    }
+
+    // overide toString
+    @Override
+    public String toString() {
+        String inv = "Inventory: ";
+        for (String item : items) {
+            inv += item + ", ";
+        }
+        return inv;
+        
     }
 }
