@@ -20,12 +20,12 @@ public class GameClasses {
       public static HashMap<Integer, Abilities> createAdventurerAbilities() {
         HashMap<Integer, Abilities> adventurerMap = new HashMap<>();
 
-        Abilities level1 = new AbilitiesBuilder().setINT(1).setDEF(1).setATK(3)
+        Abilities level1 = new AbilitiesBuilder(new Abilities()).setINT(1).setDEF(1).setATK(3)
                 .setCHA(2).setALC(3).build();
-        Abilities level2 = new AbilitiesBuilder().setINT(2).setCHA(3).build();
-        Abilities level3 = new AbilitiesBuilder().setATK(5).setALC(1).build();
-        Abilities level4 = new AbilitiesBuilder().setDEF(3).build();
-        Abilities level5 = new AbilitiesBuilder().setVIS(1).setDEF(4).build();
+        Abilities level2 = new AbilitiesBuilder(level1).setINT(2).setCHA(3).build();
+        Abilities level3 = new AbilitiesBuilder(level2).setATK(5).setALC(1).build();
+        Abilities level4 = new AbilitiesBuilder(level3).setDEF(3).build();
+        Abilities level5 = new AbilitiesBuilder(level4).setVIS(1).setDEF(4).build();
 
         adventurerMap.put(1, level1);
         adventurerMap.put(2, level2);
@@ -41,12 +41,12 @@ public class GameClasses {
     public static HashMap<Integer, Abilities> createArcherAbilities() {
         HashMap<Integer, Abilities> archerMap = new HashMap<>();
 
-        Abilities level1 = new AbilitiesBuilder().setINT(1).setDEF(0).setATK(3)
+        Abilities level1 = new AbilitiesBuilder(new Abilities()).setINT(1).setATK(3)
                 .setCHA(1).setALC(3).build();
-        Abilities level2 = new AbilitiesBuilder().setDEF(1).setCHA(2).build();
-        Abilities level3 = new AbilitiesBuilder().setATK(3).setALC(1).build();
-        Abilities level4 = new AbilitiesBuilder().setDEF(2).build();
-        Abilities level5 = new AbilitiesBuilder().setALC(4).build();
+        Abilities level2 = new AbilitiesBuilder(level1).setDEF(1).setCHA(2).build();
+        Abilities level3 = new AbilitiesBuilder(level2).setATK(3).setALC(1).build();
+        Abilities level4 = new AbilitiesBuilder(level3).setDEF(2).build();
+        Abilities level5 = new AbilitiesBuilder(level4).setALC(4).build();
 
         archerMap.put(1, level1);
         archerMap.put(2, level2);
@@ -60,18 +60,19 @@ public class GameClasses {
     // Create abilities for DWARF class
     public static HashMap<Integer, Abilities> createDwarfAbilities() {
         HashMap<Integer, Abilities> dwarfMap = new HashMap<>();
-        Abilities level1 = new AbilitiesBuilder().setINT(1).setDEF(0).setATK(3)
-                .setCHA(0).setALC(4).build();
+        // dwarfLevel1.put("ALC", 4);
+        // dwarfLevel1.put("INT", 1);
+        // dwarfLevel1.put("ATK", 3);
+        Abilities level1 = new AbilitiesBuilder(new Abilities()).setINT(1).setATK(3).setALC(4).build();
 
-        Abilities level2 = new AbilitiesBuilder().setINT(0).setDEF(1).setATK(0)
-                .setCHA(5).build();
+        Abilities level2 = new AbilitiesBuilder(level1).setDEF(1).setALC(5).build();
 
-        Abilities level3 = new AbilitiesBuilder().setINT(0).setDEF(0).setATK(4)
+        Abilities level3 = new AbilitiesBuilder(level2).setATK(4)
                 .setCHA(0).build();
 
-        Abilities level4 = new AbilitiesBuilder().setINT(0).setDEF(2).setATK(0)
+        Abilities level4 = new AbilitiesBuilder(level3).setDEF(2).setATK(0)
                 .setCHA(0).build();
-        Abilities level5 = new AbilitiesBuilder().setINT(0).setDEF(0).setATK(0)
+        Abilities level5 = new AbilitiesBuilder(level4).setATK(0)
                 .setCHA(1).build();
         dwarfMap.put(1, level1);
         dwarfMap.put(2, level2);

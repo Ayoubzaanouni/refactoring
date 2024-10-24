@@ -38,6 +38,7 @@ public class UpdatePlayer {
         int currentLevel = Level.getLevel(player.getXp());//+xp
         int newXp = player.getXp() + xp;
         player.setXp(newXp);
+        player.setLevel(newXp);
         int newLevel = player.retrieveLevel();
 
         if (newLevel > currentLevel) {

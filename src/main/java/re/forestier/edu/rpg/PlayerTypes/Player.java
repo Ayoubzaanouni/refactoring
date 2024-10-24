@@ -12,7 +12,7 @@ public class Player {
 
     public String avatarClass;
 
-    public int level;
+    public int level = 1;
     public int healthPoints;
     public int currentHealthPoints;
 

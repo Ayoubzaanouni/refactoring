@@ -1,12 +1,22 @@
 package re.forestier.edu.rpg.PlayerTypes;
 
 public class AbilitiesBuilder {
-    private int intVal = 0;
-    private int defVal = 0;
-    private int atkVal = 0;
-    private int chaVal = 0;
-    private int alcVal = 0;
-    private int visVal = 0;
+    private int intVal ;
+    private int defVal ;
+    private int atkVal ;
+    private int chaVal ;
+    private int alcVal ;
+    private int visVal ;
+
+    // set old vaalues from another abilities
+    public AbilitiesBuilder(Abilities abilities) {
+        this.intVal = abilities.getINT();
+        this.defVal = abilities.getDEF();
+        this.atkVal = abilities.getATK();
+        this.chaVal = abilities.getCHA();
+        this.alcVal = abilities.getALC();
+        this.visVal = abilities.getVIS();
+    }
 
     public AbilitiesBuilder setINT(int intVal) {
         if (intVal > 0) this.intVal = intVal;
