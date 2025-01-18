@@ -389,4 +389,34 @@ public class PlayerTest {
         assertEquals(6, testPlayer.poidsActuel.intValue(), "Player should have 6 poids after adding Magic Charm because it exceeds the maximum weight.");
 }
 
+
+@Test
+public void testMarkdownStructure() {
+    Player player = new Player("Florian", "Ruzberg de Rivehaute", "DWARF", 200, new Inventory());
+    player.addMoney(400);
+    player.setXp(15);
+
+    String markdownOutput = player.toMarkdown();
+
+    assertTrue(markdownOutput.contains("# Player Details"));
+    assertTrue(markdownOutput.contains("## General Information"));
+    assertTrue(markdownOutput.contains("- **Name**:"));
+    assertTrue(markdownOutput.contains("- **Avatar**:"));
+    assertTrue(markdownOutput.contains("- **Class**:"));
+    assertTrue(markdownOutput.contains("- **Money**:"));
+    assertTrue(markdownOutput.contains("- **Level**:"));
+    
+    assertTrue(markdownOutput.contains("## Health"));
+    assertTrue(markdownOutput.contains("- **Health Points**:"));
+    assertTrue(markdownOutput.contains("- **Current Health**:"));
+    assertTrue(markdownOutput.contains("- **XP**:"));
+    
+    assertTrue(markdownOutput.contains("## Abilities"));
+    assertTrue(markdownOutput.contains("- **Abilities**:"));
+    
+    assertTrue(markdownOutput.contains("## Inventory"));
+    assertTrue(markdownOutput.contains("- **Items**:"));
+}
+
+    
 }
