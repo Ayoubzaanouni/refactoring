@@ -9,9 +9,9 @@ public class Main {
         Player firstPlayer = new Player("Florian", "Ruzberg de Rivehaute", "DWARF", 200, new Inventory());
         firstPlayer.addMoney(400);
         UpdatePlayer.addXp(firstPlayer, 15);
-        System.out.println(firstPlayer.toString());
+        System.out.println(firstPlayer.toMarkdown());
         System.out.println("------------------");
         UpdatePlayer.addXp(firstPlayer, 20);
-        System.out.println(firstPlayer.toString());
+        System.out.println(firstPlayer.toMarkdown());
     }
 }

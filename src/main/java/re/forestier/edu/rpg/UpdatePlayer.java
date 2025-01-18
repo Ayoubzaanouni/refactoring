@@ -51,13 +51,14 @@ public class UpdatePlayer {
     private static void grantRandomItem(Player player) {
         Random random = new Random();
         List<Item> items = ItemList.getItems();
+        System.out.println("Un nouvel item a été ajouté à l'inventaire !");
         Item randomItem = items.get(random.nextInt(items.size()));
 
         if (player.poidsActuel + randomItem.getWeight() > player.poidsMax) {
             System.out.println("L'inventaire est plein !");
             return; 
         }
-        player.addItem(randomItem.toString());
+        player.addItem(randomItem.getName());
         player.poidsActuel += randomItem.getWeight();
     }
 
