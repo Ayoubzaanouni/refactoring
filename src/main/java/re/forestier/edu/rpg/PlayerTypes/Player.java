@@ -4,11 +4,13 @@ import java.util.HashMap;
 import re.forestier.edu.rpg.Level;
 import re.forestier.edu.rpg.UpdatePlayer;
 import re.forestier.edu.rpg.Inventory.Inventory;
+import re.forestier.edu.rpg.Inventory.Item;
 
 public class Player {
     public String playerName;
     public String avatarName;
     public Integer money;
+    public Integer poids = 7;
 
     public String avatarClass;
 
@@ -53,6 +55,13 @@ public class Player {
     public void addMoney(int amount) {
         if (amount != 0) {
             money += amount;
+        }
+    }
+
+    public void sell(Item item) {
+        if (inventory.contains(item.getName())) {
+            inventory.removeItem(item.getName());
+            addMoney(item.getValue());
         }
     }
 

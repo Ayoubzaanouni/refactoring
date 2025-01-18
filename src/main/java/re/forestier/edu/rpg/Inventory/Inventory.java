@@ -15,8 +15,12 @@ public class Inventory {
         items.add(item);
     }
 
-    public boolean contains(String item) {
-        return items.contains(item);
+    public boolean contains(String itemName) {
+        return items.contains(itemName);
+    }
+
+    public void removeItem(String itemName) {
+        items.remove(itemName);
     }
 
     public List<String> getItems() {
