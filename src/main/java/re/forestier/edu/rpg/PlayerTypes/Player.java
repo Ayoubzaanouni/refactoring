@@ -1,16 +1,19 @@
 package re.forestier.edu.rpg.PlayerTypes;
 import java.util.HashMap;
+import java.util.List;
 
 import re.forestier.edu.rpg.Level;
 import re.forestier.edu.rpg.UpdatePlayer;
 import re.forestier.edu.rpg.Inventory.Inventory;
 import re.forestier.edu.rpg.Inventory.Item;
+import re.forestier.edu.rpg.Inventory.ItemList;
 
 public class Player {
     public String playerName;
     public String avatarName;
     public Integer money;
-    public Integer poids = 7;
+    public Integer poidsMax = 7;
+    public Integer poidsActuel = 0;
 
     public String avatarClass;
 
@@ -55,6 +58,19 @@ public class Player {
     public void addMoney(int amount) {
         if (amount != 0) {
             money += amount;
+        }
+    }
+
+    public Item getItem(String itemName) {
+        return inventory.getItem(itemName);
+    }
+
+    public void addItem(String itemName) {
+        
+        Item item = ItemList.getItem(itemName);
+        if (poidsActuel + item.getWeight() <= poidsMax) {
+            inventory.addItem(item.getName());
+            poidsActuel += item.getWeight();
         }
     }
 

@@ -1,6 +1,7 @@
 package re.forestier.edu;
 
 import re.forestier.edu.rpg.Inventory.Inventory;
+import re.forestier.edu.rpg.Inventory.Item;
 import re.forestier.edu.rpg.PlayerTypes.Player;
 import re.forestier.edu.rpg.UpdatePlayer;
 import org.junit.jupiter.api.Test;
@@ -364,6 +365,28 @@ public class PlayerTest {
     }
 
 
+    @Test
+    public void testSell() {
+        Player testPlayer = new Player("John", "Hero", "ADVENTURER", 100, new Inventory());
+        testPlayer.inventory.addItem("Lookout Ring");
+        Item item = testPlayer.getItem("Lookout Ring");
+        testPlayer.sell(item);
+        assertEquals(200, testPlayer.money.intValue(), "Player should have 200 money after selling a Lookout Ring.");
+        assertFalse(testPlayer.inventory.contains("Lookout Ring"), "Player should not have a Lookout Ring in their inventory after selling it.");
+    }
+    
 
+
+    @Test
+    public void testAddItem() {
+        Player testPlayer = new Player("John", "Hero", "ADVENTURER", 100, new Inventory());
+        testPlayer.addItem("Lookout Ring");
+        testPlayer.addItem("Scroll of Stupidity");
+        assertEquals(3, testPlayer.poidsActuel.intValue(), "Player should have 3 poids after adding Lookout Ring and Scroll of Stupidity.");
+        testPlayer.addItem("Draupnir");
+        assertEquals(6, testPlayer.poidsActuel.intValue(), "Player should have 6 poids after adding Draupnir.");
+        testPlayer.addItem("Magic Charm");
+        assertEquals(6, testPlayer.poidsActuel.intValue(), "Player should have 6 poids after adding Magic Charm because it exceeds the maximum weight.");
+}
 
 }

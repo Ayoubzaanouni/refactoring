@@ -16,6 +16,15 @@ public class ItemList {
         items.add(new Item("Holy Elixir", "Recover your HP", 3, 100));
     }
 
+    public static Item getItem(String itemName) {
+        for (Item item : items) {
+            if (item.getName().equals(itemName)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     public static List<Item> getItems() {
         return new ArrayList<>(items); // Return a copy to prevent external modification
     }

@@ -53,12 +53,12 @@ public class UpdatePlayer {
         List<Item> items = ItemList.getItems();
         Item randomItem = items.get(random.nextInt(items.size()));
 
-        if (player.poids + randomItem.getWeight() > 7) {
+        if (player.poidsActuel + randomItem.getWeight() > player.poidsMax) {
             System.out.println("L'inventaire est plein !");
             return; 
         }
-        player.inventory.addItem(randomItem.toString());
-        player.poids += randomItem.getWeight();
+        player.addItem(randomItem.toString());
+        player.poidsActuel += randomItem.getWeight();
     }
 
     // Update the player's abilities based on their class and level

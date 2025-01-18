@@ -15,6 +15,7 @@ public class Inventory {
         items.add(item);
     }
 
+
     public boolean contains(String itemName) {
         return items.contains(itemName);
     }
@@ -49,5 +50,15 @@ public class Inventory {
         }
         return inv;
         
+    }
+
+    public Item getItem(String itemName) {
+        List<Item> itemList = ItemList.getItems();
+        for (Item item : itemList) {
+            if (item.getName().equals(itemName) && items.contains(itemName)) {
+                return item;
+            }
+        }
+        return null;
     }
 }
