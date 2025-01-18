@@ -5,8 +5,9 @@ public class GameClasses {
     public static final String ARCHER = "ARCHER";
     public static final String ADVENTURER = "ADVENTURER";
     public static final String DWARF = "DWARF";
+    public static final String GOBLIN = "GOBLIN";
 
-    public static final String[] CLASSES = {ARCHER, ADVENTURER, DWARF};
+    public static final String[] CLASSES = {ARCHER, ADVENTURER, DWARF, GOBLIN};
 
     public static final boolean isValidClass(String avatarClass) {
         for (String validClass : CLASSES) {
@@ -81,6 +82,25 @@ public class GameClasses {
         dwarfMap.put(5, level5);
 
         return dwarfMap;
+    }
+
+    // Create abilities for GOBLIN class
+    public static HashMap<Integer, Abilities> createGoblinAbilities() {
+        HashMap<Integer, Abilities> goblinMap = new HashMap<>();
+
+        Abilities level1 = new AbilitiesBuilder(new Abilities()).setINT(2).setATK(2).setALC(1).build();
+        Abilities level2 = new AbilitiesBuilder(level1).setATK(3).setALC(4).build();
+        Abilities level3 = new AbilitiesBuilder(level2).setVIS(1).build();
+        Abilities level4 = new AbilitiesBuilder(level3).setDEF(1).build();
+        Abilities level5 = new AbilitiesBuilder(level4).setDEF(2).setATK(4).build();
+
+        goblinMap.put(1, level1);
+        goblinMap.put(2, level2);
+        goblinMap.put(3, level3);
+        goblinMap.put(4, level4);
+        goblinMap.put(5, level5);
+
+        return goblinMap;
     }
 
     

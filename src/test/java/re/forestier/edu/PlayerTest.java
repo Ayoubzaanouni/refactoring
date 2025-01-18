@@ -316,4 +316,54 @@ public class PlayerTest {
         assertEquals(100, testPlayer.money.intValue(), "Adding 0 money should not change the Player's money.");
     }
 
+
+    // Goblin Tests
+    @Test
+    public void testGoblinLevelUp() {
+        Player testPlayer = new Player("John", "Hero", "GOBLIN", 100, new Inventory());
+        UpdatePlayer.addXp(testPlayer, 20);
+        assertEquals(2, testPlayer.retrieveLevel(), "Goblin should level up to level 2 with 20 XP.");
+    }
+
+    @Test
+    public void testGoblinLevelUpMultiple() {
+        Player testPlayer = new Player("John", "Hero", "GOBLIN", 100, new Inventory());
+        assertEquals(1, testPlayer.retrieveLevel(), "Goblin should level up to level 3 with 56 XP.");
+        UpdatePlayer.addXp(testPlayer, 20);
+        assertEquals(2, testPlayer.retrieveLevel(), "Goblin should level up to level 3 with 56 XP.");
+
+        UpdatePlayer.addXp(testPlayer, 20);
+        assertEquals(3, testPlayer.retrieveLevel(), "Goblin should level up to level 3 with 56 XP.");
+
+        UpdatePlayer.addXp(testPlayer, 54);
+        assertEquals(4, testPlayer.retrieveLevel(), "Goblin should level up to level 4 with 110 XP.");
+
+        UpdatePlayer.addXp(testPlayer, 222);
+        assertEquals(5, testPlayer.retrieveLevel(), "Goblin should level up to level 5 with 332 XP.");
+    }
+
+    @Test
+    public void testGoblinLevelSame() {
+        Player testPlayer = new Player("John", "Hero", "GOBLIN", 100, new Inventory());
+        UpdatePlayer.addXp(testPlayer, 5);
+        assertEquals(1, testPlayer.retrieveLevel(), "Goblin should stay at level 1 with only 5 XP.");
+    }
+
+    @Test
+    public void testGoblinLevelMaxXP() {
+        Player testPlayer = new Player("John", "Hero", "GOBLIN", 100, new Inventory());
+        UpdatePlayer.addXp(testPlayer, Integer.MAX_VALUE);
+        assertTrue(testPlayer.retrieveLevel() == 5, "Goblin should level up to the maximum level possible.");
+    }
+
+    @Test
+    public void testGoblinLevelMinXP() {
+        Player testPlayer = new Player("John", "Hero", "GOBLIN", 100, new Inventory());
+        UpdatePlayer.addXp(testPlayer, Integer.MIN_VALUE);
+        assertTrue(testPlayer.retrieveLevel() == 1, "Goblin should level up to the minimum level possible.");
+    }
+
+
+
+
 }

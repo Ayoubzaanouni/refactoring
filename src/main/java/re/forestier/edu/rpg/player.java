@@ -5,7 +5,6 @@ import java.util.HashMap;
 import re.forestier.edu.rpg.Inventory.Inventory;
 
 public class player {
-    // Public Fields
     public String playerName;
     public String avatarName;
     public Integer money;
@@ -40,7 +39,6 @@ public class player {
         }
     }
 
-    // Method for retrieving player level based on XP
     public int retrieveLevel() {
         level = Level.getLevel(this.xp);
         return level;

@@ -13,17 +13,15 @@ import re.forestier.edu.rpg.PlayerTypes.Player;
 public class UpdatePlayer {
 
     
-
-    // Map to store abilities for each player class
     public static HashMap<String, HashMap<Integer, Abilities>> abilitiesPerTypeAndLevel() {
         HashMap<String, HashMap<Integer, Abilities>> abilitiesPerClass = new HashMap<>();
         abilitiesPerClass.put(GameClasses.ADVENTURER, GameClasses.createAdventurerAbilities());
         abilitiesPerClass.put(GameClasses.ARCHER, GameClasses.createArcherAbilities());
         abilitiesPerClass.put(GameClasses.DWARF, GameClasses.createDwarfAbilities());
+        abilitiesPerClass.put(GameClasses.GOBLIN, GameClasses.createGoblinAbilities());
         return abilitiesPerClass;
     }
 
-    //get the abilities of the player based on the class and level
     public static Abilities getAbilities(Player player, int level) {
         String avatarClass = player.getAvatarClass();
         if (!GameClasses.isValidClass(avatarClass)) {

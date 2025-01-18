@@ -97,11 +97,11 @@ public String toString() {
     sb.append("+-----------------------+-------------------------+\n");
     sb.append(String.format("| Player Name           | %s\n", playerName != null ? playerName : "N/A"));
     sb.append(String.format("| Avatar Name           | %s\n", avatarName != null ? avatarName : "N/A"));
-    sb.append(String.format("| Money                 | \n", money)); // Assuming money is a double
-    sb.append(String.format("| Level                 | %d\n", level)); // Correct format for integer
-    sb.append(String.format("| Health Points         | %d\n", healthPoints)); // Correct format for integer
-    sb.append(String.format("| Current Health Points  | %d\n", currentHealthPoints)); // Correct format for integer
-    sb.append(String.format("| XP                    | %d\n", xp)); // Correct format for integer
+    sb.append(String.format("| Money                 | \n", money));
+    sb.append(String.format("| Level                 | %d\n", level));
+    sb.append(String.format("| Health Points         | %d\n", healthPoints));
+    sb.append(String.format("| Current Health Points  | %d\n", currentHealthPoints));
+    sb.append(String.format("| XP                    | %d\n", xp));
     sb.append(String.format("| Avatar Class          | %s\n", avatarClass != null ? avatarClass : "N/A"));
     sb.append(String.format("| Abilities             | %s\n", abilities != null ? abilities.toString() : "N/A"));
     sb.append(String.format("| Inventory             | %s\n", inventory != null ? inventory.toString() : "N/A"));
