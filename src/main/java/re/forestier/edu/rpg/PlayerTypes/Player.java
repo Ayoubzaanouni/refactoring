@@ -1,6 +1,5 @@
 package re.forestier.edu.rpg.PlayerTypes;
 import java.util.HashMap;
-import java.util.List;
 
 import re.forestier.edu.rpg.Level;
 import re.forestier.edu.rpg.UpdatePlayer;
@@ -66,13 +65,18 @@ public class Player {
     }
 
     public void addItem(String itemName) {
-        
         Item item = ItemList.getItem(itemName);
+        if (item == null) { 
+            System.out.println("Item not found: " + itemName);
+            return;
+        }
+    
         if (poidsActuel + item.getWeight() <= poidsMax) {
             inventory.addItem(item.getName());
             poidsActuel += item.getWeight();
         }
     }
+    
 
     public void sell(Item item) {
         if (inventory.contains(item.getName())) {
