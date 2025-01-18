@@ -138,9 +138,30 @@ public String toString() {
     return sb.toString();
 }
 
-    public String toMarkdown() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toMarkdown'");
-    }
+public String toMarkdown() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("# Player Details\n\n");
+    sb.append("## General Information\n");
+    sb.append("- **Name**: ").append(playerName != null ? playerName : "N/A").append("\n");
+    sb.append("- **Avatar**: ").append(avatarName != null ? avatarName : "N/A").append("\n");
+    sb.append("- **Class**: ").append(avatarClass != null ? avatarClass : "N/A").append("\n");
+    sb.append("- **Money**: ").append(money).append("\n");
+    sb.append("- **Level**: ").append(level).append("\n\n");
+
+    sb.append("## Health\n");
+    sb.append("- **Health Points**: ").append(healthPoints).append("\n");
+    sb.append("- **Current Health**: ").append(currentHealthPoints).append("\n");
+    sb.append("- **XP**: ").append(xp).append("\n\n");
+
+    sb.append("## Abilities\n");
+    sb.append("- **Abilities**: ").append(abilities != null ? abilities.toString() : "N/A").append("\n\n");
+
+    sb.append("## Inventory\n");
+    sb.append("- **Items**: ").append(inventory != null ? inventory.toString() : "N/A").append("\n");
+
+    return sb.toString();
+}
+
+
     
 }
